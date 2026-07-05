@@ -21,3 +21,12 @@ test('GET /api/activities returns a JSON payload', async () => {
   assert.equal(response.status, 200);
   assert.ok(Array.isArray(response.body.activities));
 });
+
+test('createApp uses the provided base URL when supplied', async () => {
+  const app = createApp('https://demo-8000.app.github.dev');
+
+  const response = await request(app).get('/api/users');
+
+  assert.equal(response.status, 200);
+  assert.equal(response.body.baseUrl, 'https://demo-8000.app.github.dev');
+});

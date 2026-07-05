@@ -1,12 +1,12 @@
 import express, { type Express } from 'express';
 
-export function createApp(): Express {
+export function createApp(baseUrlOverride?: string): Express {
   const app = express();
 
   const codeSpaceName = process.env.CODESPACE_NAME;
-  const baseUrl = codeSpaceName
+  const baseUrl = baseUrlOverride || (codeSpaceName
     ? `https://${codeSpaceName}-8000.app.github.dev`
-    : 'http://localhost:8000';
+    : 'http://localhost:8000');
 
   app.get('/api/users', (_req, res) => {
     res.json({
