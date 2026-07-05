@@ -1,4 +1,5 @@
 import express, { type Express } from 'express';
+import { Activity, LeaderboardEntry, Team, User, Workout } from './models/index.js';
 
 export function createApp(baseUrlOverride?: string): Express {
   const app = express();
@@ -8,30 +9,35 @@ export function createApp(baseUrlOverride?: string): Express {
     ? `https://${codeSpaceName}-8000.app.github.dev`
     : 'http://localhost:8000');
 
-  app.get('/api/users', (_req, res) => {
+  app.get(['/api/users', '/api/users/'], async (_req, res) => {
+    const users = await User.find({}).lean();
     res.json({
       baseUrl,
-      users: [{ id: 1, name: 'Ada Lovelace' }],
+      users,
     });
   });
 
-  app.get('/api/activities', (_req, res) => {
+  app.get(['/api/activities', '/api/activities/'], async (_req, res) => {
+    const activities = await Activity.find({}).lean();
     res.json({
       baseUrl,
-      activities: [{ id: 1, type: 'Run', duration: '30 min' }],
+      activities,
     });
   });
 
-  app.get('/api/teams', (_req, res) => {
-    res.json({ teams: [{ id: 1, name: 'Alpha' }] });
+  app.get(['/api/teams', '/api/teams/'], async (_req, res) => {
+    const teams = await Team.find({}).lean();
+    res.json({ teams });
   });
 
-  app.get('/api/leaderboard', (_req, res) => {
-    res.json({ leaderboard: [{ id: 1, name: 'Ada Lovelace', score: 100 }] });
+  app.get(['/api/leaderboard', '/api/leaderboard/'], async (_req, res) => {
+    const leaderboard = await LeaderboardEntry.find({}).lean();
+    res.json({ leaderboard });
   });
 
-  app.get('/api/workouts', (_req, res) => {
-    res.json({ workouts: [{ id: 1, name: 'HIIT' }] });
+  app.get(['/api/workouts', '/api/workouts/'], async (_req, res) => {
+    const workouts = await Workout.find({}).lean();
+    res.json({ workouts });
   });
 
   return app;
