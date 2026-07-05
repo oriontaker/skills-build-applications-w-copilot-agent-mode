@@ -1,3 +1,11 @@
+export const API_ENDPOINTS = {
+  activities: '/api/activities/',
+  leaderboard: '/api/leaderboard/',
+  teams: '/api/teams/',
+  users: '/api/users/',
+  workouts: '/api/workouts/',
+};
+
 export function getApiBaseUrl() {
   const codespaceName = import.meta.env.VITE_CODESPACE_NAME;
 
@@ -6,6 +14,10 @@ export function getApiBaseUrl() {
   }
 
   return 'http://localhost:8000';
+}
+
+export function getApiUrl(path) {
+  return `${getApiBaseUrl()}${path}`;
 }
 
 export async function readApiData(url) {

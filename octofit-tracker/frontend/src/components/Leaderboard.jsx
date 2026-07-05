@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getApiBaseUrl, readApiData } from '../utils/api.js';
+import { API_ENDPOINTS, getApiUrl, readApiData } from '../utils/api.js';
 
 function Leaderboard() {
   const [rows, setRows] = useState([]);
@@ -9,7 +9,7 @@ function Leaderboard() {
   useEffect(() => {
     async function loadLeaderboard() {
       try {
-        const data = await readApiData(`${getApiBaseUrl()}/api/leaderboard/`);
+        const data = await readApiData(getApiUrl(API_ENDPOINTS.leaderboard));
         setRows(Array.isArray(data) ? data : data.leaderboard || []);
       } catch (err) {
         setError(err.message || 'Unable to load leaderboard.');

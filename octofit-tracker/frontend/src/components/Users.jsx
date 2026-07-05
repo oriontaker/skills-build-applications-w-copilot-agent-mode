@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getApiBaseUrl, readApiData } from '../utils/api.js';
+import { API_ENDPOINTS, getApiUrl, readApiData } from '../utils/api.js';
 
 function Users() {
   const [users, setUsers] = useState([]);
@@ -9,7 +9,7 @@ function Users() {
   useEffect(() => {
     async function loadUsers() {
       try {
-        const data = await readApiData(`${getApiBaseUrl()}/api/users/`);
+        const data = await readApiData(getApiUrl(API_ENDPOINTS.users));
         setUsers(Array.isArray(data) ? data : data.users || []);
       } catch (err) {
         setError(err.message || 'Unable to load users.');

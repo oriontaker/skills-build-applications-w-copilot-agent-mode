@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getApiBaseUrl, readApiData } from '../utils/api.js';
+import { API_ENDPOINTS, getApiUrl, readApiData } from '../utils/api.js';
 
 function Activities() {
   const [activities, setActivities] = useState([]);
@@ -9,7 +9,7 @@ function Activities() {
   useEffect(() => {
     async function loadActivities() {
       try {
-        const data = await readApiData(`${getApiBaseUrl()}/api/activities/`);
+        const data = await readApiData(getApiUrl(API_ENDPOINTS.activities));
         setActivities(Array.isArray(data) ? data : data.activities || []);
       } catch (err) {
         setError(err.message || 'Unable to load activities.');
